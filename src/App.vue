@@ -1,18 +1,20 @@
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+  <AppHeader />
+  <AppSideMenu />
 
   <main>
-    <TheWelcome />
+    <RouterView />
   </main>
+
+  <Toast position="top-center" />
 </template>
 
-<script setup></script>
+<script setup>
+import { RouterView } from 'vue-router';
+import AppHeader from './components/layouts/AppHeader.vue';
+import Toast from 'primevue/toast';
+import AppSideMenu from './components/layouts/AppSideMenu.vue';
+</script>
 
 <style scoped>
 header {
