@@ -152,7 +152,6 @@ import Button from 'primevue/button';
 
 import { ref, watch, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
-import { $api } from '@/services/api/api';
 import useToastMessage from '@/hooks/useToastMessage';
 
 const router = useRouter();
@@ -197,21 +196,6 @@ const checkDuplicateId = async () => {
     helperId.value = '아이디를 입력해주세요.';
     return;
   }
-
-  const result = await $api.auth.post(
-    {
-      id: id.value,
-    },
-    'confirm-id', // 서브 URL
-  );
-
-  if (result.duplicate) {
-    isValidId.value = false;
-    helperId.value = '이미 사용 중인 아이디입니다.';
-  } else {
-    isValidId.value = true;
-    helperId.value = '사용가능한 아이디입니다.';
-  }
 };
 
 // 닉네임 중복 검사
@@ -220,21 +204,6 @@ const checkDuplicateNickname = async () => {
     isValidNickname.value = false;
     helperNickname.value = '닉네임을 입력해주세요.';
     return;
-  }
-
-  const result = await $api.auth.post(
-    {
-      nickname: nickname.value,
-    },
-    'confirm-nickname', // 서브 URL
-  );
-
-  if (result.duplicate) {
-    isValidNickname.value = false;
-    helperNickname.value = '이미 사용 중인 닉네임입니다.';
-  } else {
-    isValidNickname.value = true;
-    helperNickname.value = '사용가능한 닉네임입니다.';
   }
 };
 
@@ -246,12 +215,6 @@ const sendEmailVerifyCode = async () => {
   }
 
   isSendingEmail.value = true;
-  $api.auth.sendEmailVerifyCode(email.value).then(() => {
-    isSendingEmail.value = false;
-    isCompleteSendEmail.value = true;
-    isValidEmail.value = true;
-    helperEmail.value = '이메일로 인증코드가 전송되었습니다.';
-  });
 };
 
 const retrySendEmail = () => {
@@ -267,12 +230,6 @@ const verifyEmail = async () => {
     helperEmailCode.value = '인증코드를 입력해주세요.';
     return;
   }
-
-  $api.auth.verifyEmail(email.value, emailCode.value).then(() => {
-    isCompleteVerifyEmail.value = true;
-    isValidEmailCode.value = true;
-    helperEmailCode.value = '인증완료 되었습니다.';
-  });
 };
 
 const submitForm = async () => {
@@ -312,8 +269,6 @@ const submitForm = async () => {
   const formData = new FormData();
   formData.append('signupDto', new Blob([JSON.stringify(signupData)], { type: 'application/json' }));
   formData.append('imgFile', profileImageFile);
-
-  await $api.auth.post(formData, 'signup');
 
   // 성공
   router.replace('/login');

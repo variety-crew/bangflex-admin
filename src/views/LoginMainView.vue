@@ -45,7 +45,6 @@ import InputText from 'primevue/inputtext';
 import { ref, watch } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useRouter } from 'vue-router';
-import { $api } from '@/services/api/api';
 import Password from 'primevue/password';
 
 const userStore = useUserStore();
@@ -89,7 +88,6 @@ const login = async () => {
   userStore.saveTokens(userTokens);
 
   // 회원 정보 가져오기
-  const userInfo = await $api.user.get('info');
 
   // userStore에 유저 정보 저장
   userStore.saveUserInfo(userInfo);

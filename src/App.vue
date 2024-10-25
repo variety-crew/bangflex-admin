@@ -1,10 +1,11 @@
 <template>
   <AppHeader />
-  <AppSideMenu />
-
-  <main>
-    <RouterView />
-  </main>
+  <div class="app-content">
+    <AppSideMenu />
+    <main>
+      <RouterView />
+    </main>
+  </div>
 
   <Toast position="top-center" />
 </template>
@@ -17,30 +18,12 @@ import AppSideMenu from './components/layouts/AppSideMenu.vue';
 </script>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
+.app-content {
+  flex-grow: 1;
+  display: flex;
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  main {
+    flex-grow: 1;
   }
 }
 </style>
